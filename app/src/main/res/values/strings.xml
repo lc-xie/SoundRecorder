@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">SoundRecorder</string>
+
+    <string name="menu_settings">设置</string>
+    <string name="text_back_top_layout">返回</string>
+    <string name="text_setting_top_layout">设置</string>
+
+
+
 </resources>
