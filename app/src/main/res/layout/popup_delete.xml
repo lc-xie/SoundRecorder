@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        >
+
+        <TextView
+            android:layout_width="260dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif-condensed"
+            android:textStyle="bold"
+            android:text="@string/popup_delete_title"
+            android:textSize="@dimen/popup_title_size"/>
+
+        <TextView
+            android:id="@+id/popup_delete_file_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/popup_rename_title"
+            android:textSize="@dimen/popup_title_size"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/popup_delete_cancel"
+                android:text="@string/popup_rename_cancel"
+                android:background="@color/white"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <!--<view
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>-->
+
+            <Button
+                android:id="@+id/popup_delete_ok"
+                android:text="@string/popup_rename_ok"
+                android:background="@color/white"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

@@ -5,6 +5,21 @@
     <string name="text_back_top_layout">返回</string>
     <string name="text_setting_top_layout">设置</string>
 
+    <string name="text_bottom_normal">Tap the button to start recording</string>
+    <string name="text_bottom_recording">Recording...</string>
 
+    <string name="text_view_time_auto">00:00</string>
+
+    <string name="text_time_play">00:00</string>
+
+    <string name="delete_recording_file">删除</string>
+    <string name="rename_recording_file">重命名</string>
+
+    <!--popup 重命名弹窗-->
+    <string name="popup_rename_title">请输入文件名</string>
+    <string name="popup_rename_cancel">取消</string>
+    <string name="popup_rename_ok">确定</string>
+    <!--popup 删除窗口-->
+    <string name="popup_delete_title">删除</string>
 
 </resources>

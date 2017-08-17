@@ -6,4 +6,15 @@
 
     <dimen name="tab_indicator_height">3dp</dimen>
 
+    <!--录音文件字体-->
+    <dimen name="text_size_recordings_bold">15sp</dimen>
+    <dimen name="text_size_recordings_normal">12sp</dimen>
+    <!--录音界面字体-->
+    <dimen name="text_size_bottom_layout">20sp</dimen>
+    <!--popup弹窗标题字体大小-->
+    <dimen name="popup_title_size">18sp</dimen>
+    <dimen name="popup_second_title_size">16sp</dimen>
+
+    <dimen name="fab_width">56dp</dimen>
+
 </resources>
