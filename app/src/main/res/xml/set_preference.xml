@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:key="check_set_pref"
+        android:title="Enable high quality recording"
+        android:summary="Record in CD quality"/>
+
+    <Preference
+        android:key="version_set_pref"
+        android:title="About this APP"
+        android:summary="v%s"/>
+
+</PreferenceScreen>

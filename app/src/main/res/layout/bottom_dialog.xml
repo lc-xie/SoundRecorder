@@ -2,12 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="280dp"
     android:background="@color/white"
     android:paddingLeft="22.5dp"
     android:paddingRight="22.5dp"
     android:paddingBottom="20dp"
     android:paddingTop="20dp">
+
+    <Button
+        android:id="@+id/multiple_recording_file"
+        android:text="多选"
+        android:background="@drawable/bg_bottom_button"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/share_recording_file"
+        android:text="分享"
+        android:background="@drawable/bg_bottom_button"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginTop="16dp"/>
 
     <Button
         android:id="@+id/delete_recording_file"
@@ -17,7 +39,8 @@
         android:textColor="@color/white"
         android:fontFamily="sans-serif-condensed"
         android:layout_width="match_parent"
-        android:layout_height="42dp" />
+        android:layout_height="42dp"
+        android:layout_marginTop="16dp"/>
 
     <Button
         android:id="@+id/rename_recording_file"

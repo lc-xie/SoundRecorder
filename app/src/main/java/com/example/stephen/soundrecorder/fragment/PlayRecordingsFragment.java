@@ -86,6 +86,15 @@ public class PlayRecordingsFragment extends DialogFragment {
             e.printStackTrace();
         }
         mediaPlayer.prepareAsync();
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                curPosition=0;
+                mediaPlayer.seekTo(0);
+                button.setImageResource(R.drawable.ic_recordings_play);
+                beginTime.setText(R.string.text_time_play);
+            }
+        });
         mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {

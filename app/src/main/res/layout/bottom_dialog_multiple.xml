@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingLeft="36dp"
+    android:paddingRight="36dp">
+
+    <Button
+        android:id="@+id/delete_multiple_recording_file"
+        android:text="删除"
+        android:background="@drawable/bg_bottom_button_multiple"
+        android:textSize="18sp"
+        android:textColor="@color/primary_text"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="24dp" />
+
+    <Button
+        android:id="@+id/cancel_multiple_recording_file"
+        android:text="取消"
+        android:background="@drawable/bg_bottom_button_multiple"
+        android:textSize="18sp"
+        android:textColor="@color/primary_text"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="36dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="24dp"/>
+
+</LinearLayout>

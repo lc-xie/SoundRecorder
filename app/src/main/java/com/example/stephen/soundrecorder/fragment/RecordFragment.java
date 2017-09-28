@@ -1,7 +1,6 @@
 package com.example.stephen.soundrecorder.fragment;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,49 +9,39 @@ import android.content.IntentFilter;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Chronometer;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.stephen.soundrecorder.CalculateDurationToTime;
 import com.example.stephen.soundrecorder.R;
-import com.example.stephen.soundrecorder.adapter.RecordingsAdapter;
-import com.example.stephen.soundrecorder.beans.RecordingFiles;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by stephen on 17-8-11.
+ * 录音界面
  */
 
 public class RecordFragment extends Fragment {
 
     private MediaRecorder mediaRecorder;
     private File fileDir;
-    private boolean isRecording=false;
-    private int timeRecording=0;
     private String fileNameAuto="record.mp3";
 
-    private TextView textViewTime;
-    private FloatingActionButton fab_normal;
+    private Chronometer chronometer;//计时器
+
     private RecordFragmentReceiver receiver;
     public static final String BEGIN_RECORDING="com.example.stephen.soundrecorder.action.BEGIN_RECORDING";
     public static final String STOP_RECORDING="com.example.stephen.soundrecorder.action.STOP_RECORDING";
-    public static final String CHANGE_UI="com.example.stephen.soundrecorder.action.CHANGE_UI";
     public static final String NOTIFY_RECYCLER_VIEW="com.example.stephen.soundrecorder.action.NOTIFY_RECYCLER_VIEW";
 
 
@@ -65,7 +54,8 @@ public class RecordFragment extends Fragment {
         FragmentTransaction transaction=fragmentManager.beginTransaction();
         transaction.replace(R.id.bottom_frame_layout,new BottomNormalFragment());
         transaction.commit();
-        textViewTime=(TextView)view.findViewById(R.id.time_recording);
+        //初始化计时器
+        chronometer=(Chronometer)view.findViewById(R.id.chronometer);
 
         fileDir=new File(Environment.getExternalStorageDirectory(),"/RecordFile");
         if (!fileDir.exists())fileDir.mkdir();
@@ -93,44 +83,21 @@ public class RecordFragment extends Fragment {
             mediaRecorder.setOutputFile(newFile.getAbsolutePath());
             mediaRecorder.prepare();
             mediaRecorder.start();
+            chronometer.setBase(SystemClock.elapsedRealtime());
+            chronometer.start();//停止计时器计时
         }catch (IOException e){
             e.printStackTrace();
         }
-        timeRecording=0;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (isRecording){
-                    timeRecording++;
-                    Intent changeUiIntent=new Intent(CHANGE_UI);
-                    getActivity().sendBroadcast(changeUiIntent);
-                    Message message=new Message();
-                    message.what=1;
-                    handler.sendMessage(message);
-                    try {
-                        Thread.sleep(1000);
-                    }catch (InterruptedException e){
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
-
     }
 
-    public Handler handler=new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.what==1){
-                textViewTime.setText(calTime(timeRecording));
-            }
-        }
-    };
-
+    /**
+     * 停止录音
+     */
     public void stopRecording(){
         mediaRecorder.stop();
         mediaRecorder.reset();
         mediaRecorder.release();
+        chronometer.stop();//停止计时器计时
 
         final EditText editText;
         editText=new EditText(getContext());
@@ -154,6 +121,7 @@ public class RecordFragment extends Fragment {
                 //发送广播通知SavedRecordingsFragment更新recyclerView
                 Intent notifyRecyclerViewIntent=new Intent(NOTIFY_RECYCLER_VIEW);
                 getActivity().sendBroadcast(notifyRecyclerViewIntent);
+                chronometer.setBase(SystemClock.elapsedRealtime());
             }
         });
         dialog.setNegativeButton("CANCLE", new DialogInterface.OnClickListener() {
@@ -163,10 +131,10 @@ public class RecordFragment extends Fragment {
                 nowFile.delete();
                 Toast.makeText(getContext(),"录音文件未保存！",Toast.LENGTH_SHORT).show();
                 dialog.cancel();
+                chronometer.setBase(SystemClock.elapsedRealtime());
             }
         });
         dialog.show();
-        textViewTime.setText(R.string.text_view_time_auto);
     }
 
 
@@ -182,7 +150,6 @@ public class RecordFragment extends Fragment {
                     //先切换底部framelayout布局
                     transaction.replace(R.id.bottom_frame_layout,new BottomRecordingFragment());
                     transaction.commit();
-                    isRecording=true;
                     beginRecording();
                     break;
                 case STOP_RECORDING:
@@ -190,29 +157,11 @@ public class RecordFragment extends Fragment {
                     //先切换底部framelayout布局
                     transaction.replace(R.id.bottom_frame_layout,new BottomNormalFragment());
                     transaction.commit();
-                    isRecording=false;
                     stopRecording();
-                    break;
-                case CHANGE_UI:
-                    textViewTime.setText(calTime(timeRecording));
                     break;
                 default:break;
             }
         }
-    }
-
-    public String calTime(int i){
-        int min,sec;
-        min=i/60;
-        sec=i%60;
-        String minStr,secStr;
-        if (min==0){
-            minStr="00";
-        }else minStr=""+min;
-        if (sec<10){
-            secStr="0"+sec;
-        }else secStr=""+sec;
-        return minStr+":"+secStr;
     }
 
     @Override
@@ -221,7 +170,6 @@ public class RecordFragment extends Fragment {
         IntentFilter intentFilter=new IntentFilter();
         intentFilter.addAction(BEGIN_RECORDING);
         intentFilter.addAction(STOP_RECORDING);
-        intentFilter.addAction(CHANGE_UI);
         receiver=new RecordFragmentReceiver();
         getActivity().registerReceiver(receiver,intentFilter);
     }

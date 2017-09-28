@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.example.stephen.soundrecorder.fragment.SettingFragment;
+
 public class SettingActivity extends AppCompatActivity {
 
 
@@ -17,6 +19,10 @@ public class SettingActivity extends AppCompatActivity {
         LinearLayout backLinear=(LinearLayout)findViewById(R.id.linear_top_back);
         backLinear.setOnClickListener(new BackLinearOnClick());
 
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.set_container, new SettingFragment())
+                .commit();
     }
 
     public class BackLinearOnClick implements View.OnClickListener{
